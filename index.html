@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>KALKI INTELLIGENCY | The GD Journey — Cinematic Experience</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Orbitron:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js">
+    </script>
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.157.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/"
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg: #010510;
+            --bg2: #030d1a;
+            --cyan: #00E5FF;
+            --cyan2: #00b8d4;
+            --gold: #C6A43F;
+            --gold2: #e0c75a;
+            --purple: #7c3aed;
+            --text: #e8e8f0;
+            --text2: #b0b8c8;
+            --text3: #7a8298;
+            --glass: rgba(6, 14, 28, 0.72);
+            --glass2: rgba(10, 18, 36, 0.8);
+            --border: rgba(0, 229, 255, 0.28);
+            --borderGold: rgba(198, 164, 63, 0.35);
+            --font-display: 'Orbitron', 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', 'Space Grotesk', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --ease-cine: cubic-bezier(0.22, 0.61, 0.36, 1);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #00c4e0 #010510;
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar {
+            width: 3px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #010510;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00c4e0;
+            border-radius: 10px;
+        }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.65;
+            position: relative;
+        }
+        /* ── FIXED BACKGROUND CANVAS ── */
+        #particleCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .bg-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse at 30% 15%, rgba(0, 200, 240, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 75%, rgba(198, 164, 63, 0.03) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 50%, rgba(80, 40, 180, 0.03) 0%, transparent 50%);
+        }
+        .bg-vignette {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            box-shadow: inset 0 0 180px 60px rgba(1, 3, 10, 0.85);
+        }
+        .bg-scanlines {
+            position: fixed;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0.018;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.12) 2px, rgba(255, 255, 255, 0.12) 3px);
+        }
+        /* ── HEADER ── */
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 0.6rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(2, 6, 16, 0.78);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.22);
+            transition: all 0.5s var(--ease-cine);
+        }
+        #header.scrolled {
+            background: rgba(2, 6, 16, 0.93);
+            border-bottom-color: rgba(0, 229, 255, 0.45);
+            box-shadow: 0 6px 35px rgba(0, 0, 0, 0.55);
+        }
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: linear-gradient(135deg, #00E5FF, #0088cc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #010510;
+            font-weight: 900;
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+        @keyframes logoGlow {
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(0, 229, 255, 0.45);
+            }
+            50% {
+                box-shadow: 0 0 45px rgba(0, 229, 255, 0.75), 0 0 70px rgba(0, 180, 220, 0.3);
+            }
+        }
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            background: linear-gradient(135deg, #fff, #00E5FF, #C6A43F);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: logoShimmer 6s ease infinite;
+        }
+        @keyframes logoShimmer {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        .logo-sub {
+            font-size: 0.5rem;
+            letter-spacing: 4px;
+            color: #9098b0;
+            display: block;
+        }
+        /* ── MENU BUTTON ── */
+        #menuBtn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(0, 229, 255, 0.06);
+            border: 1.5px solid rgba(0, 229, 255, 0.45);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.4s var(--ease-cine);
+            z-index: 1001;
+            position: relative;
+        }
+        #menuBtn:hover {
+            background: rgba(0, 229, 255, 0.16);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.35);
+            transform: scale(1.06);
+        }
+        #menuBtn span {
+            display: block;
+            width: 20px;
+            height: 1.8px;
+            background: #00E5FF;
+            border-radius: 2px;
+            transition: all 0.4s;
+            box-shadow: 0 0 5px rgba(0, 229, 255, 0.5);
+        }
+        #menuBtn.open span:nth-child(1) {
+            transform: translateY(5.5px) rotate(45deg);
+        }
+        #menuBtn.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        #menuBtn.open span:nth-child(3) {
+            transform: translateY(-5.5px) rotate(-45deg);
+        }
+        /* ── NAV PANEL ── */
+        #navPanel {
+            position: fixed;
+            top: 75px;
+            right: 14px;
+            width: 300px;
+            max-height: 70vh;
+            overflow-y: auto;
+            background: rgba(6, 14, 30, 0.9);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border-radius: 22px;
+            border: 1px solid rgba(0, 229, 255, 0.35);
+            padding: 1rem;
+            z-index: 999;
+            transform: translateX(140%);
+            transition: transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.08);
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.65), 0 0 35px rgba(0, 229, 255, 0.08);
+            scrollbar-width: thin;
+            scrollbar-color: #00c4e0 transparent;
+        }
+        #navPanel.open {
+            transform: translateX(0);
+        }
+        #navPanel::-webkit-scrollbar {
+            width: 3px;
+        }
+        #navPanel::-webkit-scrollbar-thumb {
+            background: #00c4e0;
+            border-radius: 10px;
+        }
+        #navPanel .nav-title {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            letter-spacing: 5px;
+            color: var(--gold);
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+            padding-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
+        }
+        #navPanel ul {
+            list-style: none;
+        }
+        #navPanel li {
+            padding: 0.5rem 0.7rem;
+            margin: 0.15rem 0;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.78rem;
+            letter-spacing: 0.3px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            border: 1px solid transparent;
+            font-weight: 500;
+            color: #c8cdd8;
+        }
+        #navPanel li:hover {
+            background: rgba(0, 229, 255, 0.08);
+            border-color: rgba(0, 229, 255, 0.3);
+            color: #fff;
+            transform: translateX(4px);
+            box-shadow: 0 0 18px rgba(0, 229, 255, 0.08);
+        }
+        #navPanel li .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--cyan);
+            flex-shrink: 0;
+            box-shadow: 0 0 7px var(--cyan);
+        }
+        /* ── SECTIONS ── */
+        .scene {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7rem 2rem 5rem;
+            position: relative;
+            z-index: 10;
+        }
+        .card {
+            max-width: 1000px;
+            width: 100%;
+            background: var(--glass);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 32px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.5s var(--ease-cine);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(0, 229, 255, 0.025), transparent, rgba(198, 164, 63, 0.02),
+                    transparent);
+            animation: cardSpin 22s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes cardSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .card>* {
+            position: relative;
+            z-index: 1;
+        }
+        .card:hover {
+            border-color: rgba(0, 229, 255, 0.55);
+            box-shadow: 0 28px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(0, 229, 255, 0.12);
+            transform: translateY(-3px);
+            background: var(--glass2);
+        }
+        .card.gold {
+            border-color: var(--borderGold);
+        }
+        .card.gold:hover {
+            border-color: rgba(198, 164, 63, 0.6);
+            box-shadow: 0 28px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(198, 164, 63, 0.12);
+        }
+        /* ── TYPOGRAPHY ── */
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4.5vw, 3rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #fff, #00E5FF, #C6A43F);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: h1Shimmer 7s ease infinite;
+            line-height: 1.2;
+            margin-bottom: 0.8rem;
+        }
+        @keyframes h1Shimmer {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.3rem, 3vw, 1.9rem);
+            font-weight: 700;
+            color: var(--gold);
+            border-left: 3.5px solid var(--cyan);
+            padding-left: 0.9rem;
+            margin-bottom: 1.3rem;
+            text-shadow: 0 0 20px rgba(198, 164, 63, 0.25);
+            letter-spacing: 0.8px;
+        }
+        .stat-large {
+            font-family: var(--font-display);
+            font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+            font-weight: 800;
+            color: var(--cyan);
+            text-shadow: 0 0 28px rgba(0, 229, 255, 0.45);
+            letter-spacing: 1.5px;
+            display: block;
+            line-height: 1.25;
+        }
+        .fact {
+            font-size: 0.98rem;
+            margin: 0.7rem 0;
+            padding-left: 0.9rem;
+            border-left: 2px solid rgba(0, 229, 255, 0.35);
+            line-height: 1.7;
+            transition: all 0.35s;
+            color: #c0c6d4;
+            position: relative;
+        }
+        .fact::before {
+            content: '';
+            position: absolute;
+            left: -2px;
+            top: 0;
+            width: 2px;
+            height: 0;
+            background: var(--cyan);
+            transition: height 0.5s var(--ease-out-expo);
+            border-radius: 0 2px 2px 0;
+        }
+        .fact:hover {
+            color: #fff;
+            border-left-color: var(--cyan);
+        }
+        .fact:hover::before {
+            height: 100%;
+        }
+        .grid-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 0.9rem;
+            margin: 1.4rem 0;
+        }
+        .stat-box {
+            background: rgba(4, 10, 24, 0.55);
+            border-radius: 18px;
+            padding: 1.1rem 0.9rem;
+            text-align: center;
+            border: 1px solid rgba(198, 164, 63, 0.2);
+            transition: all 0.4s var(--ease-cine);
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+        }
+        .stat-box::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--cyan);
+            transition: width 0.5s var(--ease-out-expo);
+            border-radius: 3px;
+        }
+        .stat-box:hover {
+            border-color: rgba(0, 229, 255, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 0 22px rgba(0, 229, 255, 0.06);
+            background: rgba(5, 12, 30, 0.7);
+        }
+        .stat-box:hover::after {
+            width: 50%;
+        }
+        .stat-box .val {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--cyan);
+            text-shadow: 0 0 18px rgba(0, 229, 255, 0.4);
+            display: block;
+        }
+        .stat-box .lbl {
+            font-size: 0.72rem;
+            color: #9098b0;
+            letter-spacing: 0.8px;
+            margin-top: 0.25rem;
+        }
+        .btn-cta {
+            display: inline-block;
+            background: linear-gradient(105deg, #00E5FF, #0077aa, #00b8d4);
+            background-size: 200% 200%;
+            padding: 0.85rem 2.3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            color: #010510;
+            margin-top: 1.4rem;
+            transition: all 0.45s;
+            font-family: var(--font-display);
+            letter-spacing: 1.8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.3);
+            animation: btnPulse 5s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        @keyframes btnPulse {
+            0%,
+            100% {
+                box-shadow: 0 0 25px rgba(0, 229, 255, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(0, 229, 255, 0.55);
+            }
+        }
+        .btn-cta:hover {
+            transform: scale(1.04) translateY(-2px);
+            box-shadow: 0 0 55px rgba(0, 229, 255, 0.6), 0 8px 25px rgba(0, 0, 0, 0.35);
+        }
+        .btn-cta:active {
+            transform: scale(0.95);
+        }
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyan), transparent);
+            margin: 1rem 0;
+            border-radius: 2px;
+        }
+        /* ── IMAGE / VIDEO PLACEHOLDERS ── */
+        .media-placeholder {
+            width: 100%;
+            max-width: 480px;
+            aspect-ratio: 16/9;
+            border-radius: 16px;
+            background: rgba(0, 229, 255, 0.04);
+            border: 1px dashed rgba(0, 229, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7a8298;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            margin: 1rem auto;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .media-placeholder:hover {
+            border-color: rgba(0, 229, 255, 0.55);
+            background: rgba(0, 229, 255, 0.07);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.08);
+        }
+        .media-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+        .media-placeholder .tag {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.5;
+            font-size: 0.65rem;
+        }
+        /* ── FOOTER ── */
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            font-size: 0.7rem;
+            color: #7a8298;
+            letter-spacing: 1px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            z-index: 10;
+            position: relative;
+            font-family: var(--font-mono);
+        }
+        footer .cyan {
+            color: var(--cyan);
+        }
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            #navPanel {
+                width: 250px;
+                right: 4px;
+                top: 62px;
+                border-radius: 16px;
+            }
+            .card {
+                padding: 1.3rem;
+                border-radius: 22px;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+            h2 {
+                font-size: 1.05rem;
+                border-left-width: 2.5px;
+                padding-left: 0.6rem;
+            }
+            .scene {
+                padding: 5rem 0.7rem 2.5rem;
+                min-height: auto;
+            }
+            .grid-stats {
+                grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+                gap: 0.5rem;
+            }
+            .stat-box .val {
+                font-size: 1.1rem;
+            }
+            #header {
+                padding: 0.4rem 0.9rem;
+            }
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 0.7rem;
+            }
+            .logo-text {
+                font-size: 0.9rem;
+                letter-spacing: 1px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Layers -->
+    <div class="bg-overlay"></div>
+    <div class="bg-vignette"></div>
+    <div class="bg-scanlines"></div>
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="logo-wrap">
+            <div class="logo-icon">⚡</div>
+            <div>
+                <span class="logo-text">KALKI</span>
+                <small class="logo-sub">INTELLIGENCY</small>
+            </div>
+        </div>
+        <div id="menuBtn" aria-label="Menu" role="button" tabindex="0">
+            <span></span><span></span><span></span>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav id="navPanel">
+        <div class="nav-title">✦ NODE NAVIGATION ✦</div>
+        <ul id="navList">
+            <li data-target="0"><span class="dot"></span>The Myth of Stability</li>
+            <li data-target="1"><span class="dot"></span>AI's Water Crisis</li>
+            <li data-target="2"><span class="dot"></span>Your Data, Their Profit</li>
+            <li data-target="3"><span class="dot"></span>Digital Colonisation</li>
+            <li data-target="4"><span class="dot"></span>Free Expression Muzzled</li>
+            <li data-target="5"><span class="dot"></span>Youth Exploitation Crisis</li>
+            <li data-target="6"><span class="dot"></span>Unpaid Internship Trap</li>
+            <li data-target="7"><span class="dot"></span>AI's Hidden Carbon Footprint</li>
+            <li data-target="8"><span class="dot"></span>✦ THE KALKI ANSWER</li>
+            <li data-target="9"><span class="dot"></span>How We Compensate You</li>
+            <li data-target="10"><span class="dot"></span>Join a Team, Not a Hierarchy</li>
+            <li data-target="11"><span class="dot"></span>REPOST OR REGRET</li>
+        </ul>
+    </nav>
+
+    <!-- SCENE 0: The Myth of Stability -->
+    <section class="scene" id="scene0">
+        <div class="card">
+            <h1>THE MYTH OF STABILITY</h1>
+            <div class="divider"></div>
+            <div class="grid-stats">
+                <div class="stat-box"><span class="val">244,000+</span><span class="lbl">Tech Jobs Erased in 2025</span></div>
+                <div class="stat-box"><span class="val">69%</span><span class="lbl">Layoffs Concentrated in the US</span></div>
+                <div class="stat-box"><span class="val">50,000</span><span class="lbl">Jobs Lost Directly to AI Replacement</span></div>
+                <div class="stat-box"><span class="val">142,000+</span><span class="lbl">Layoffs Already in 2026</span></div>
+            </div>
+            <div class="fact">These companies are not loyal to you — they are loyal to their stock price. Every quarter, human beings become liabilities on a balance sheet, expendable the moment an algorithm outperforms them.</div>
+            <div class="fact">The narrative of "job stability" is a carefully crafted illusion. Your desk, your title, your salary — all vanish the instant the spreadsheet demands it. In 2025 alone, over 50,000 roles were explicitly eliminated due to AI automation, not economic downturn.</div>
+            <div class="fact">The numbers are accelerating. 2026 has already seen 142,000+ tech layoffs announced. The message is clear: <strong>nobody is safe in a system that values profit over people.</strong></div>
+            <div class="media-placeholder"><span class="tag">📷 ./public/myth-stability.webp</span></div>
+        </div>
+    </section>
+
+    <!-- SCENE 1: AI's Water Crisis -->
+    <section class="scene" id="scene1">
+        <div class="card gold">
+            <h2>🌊 AI's Invisible Victim: Fresh Water</h2>
+            <div class="divider"></div>
+            <div class="fact">A <strong>single AI query</strong> — depending on model complexity and cloud region — can consume between <span class="stat-large">3.5 millilitres and 500 millilitres</span> of fresh drinking water. Every time you ask ChatGPT something, water evaporates from cooling towers.</div>
+            <div class="fact">By <strong>2027</strong>, AI data centres worldwide are projected to demand <span class="stat-large">4.2 to 6.6 billion cubic metres</span> of water annually. To put that in perspective: <strong>that is roughly half of the United Kingdom's total yearly water usage.</strong></div>
+            <div class="fact">Global data centres already consume approximately <span class="stat-large">560 billion litres</span> of fresh water each year — and this number is rising exponentially with every new AI model deployed. <strong>Water scarcity is the hidden cost of your convenience.</strong></div>
+            <div class="fact">Microsoft alone reported a 34% increase in water consumption from 2021 to 2022, driven almost entirely by AI infrastructure. In regions already facing drought — like parts of India, the American West, and Spain — data centres compete directly with local communities for access to potable water.</div>
+            <div class="media-placeholder"><span class="tag">🎬 ./public/water-crisis.webm</span></div>
+        </div>
+    </section>
+
+    <!-- SCENE 2: Your Data, Their Profit -->
+    <section class="scene" id="scene2">
+        <div class="card">
+            <h2>🔒 YOUR DATA, THEIR PROFIT</h2>
+            <div class="divider"></div>
+            <div class="fact">Google controls an estimated <span class="stat-large">97% to 98%</span> of India's search market. This is not competition — this is a near-total monopoly over what billions of people can discover, learn, and believe about the world.</div>
+            <div class="fact">In 2025 alone, the Indian government issued <span class="stat-large">over 24,000</span> content blocking orders to platforms like Google, Facebook, and Twitter. Your digital reality is curated, censored, and shaped by forces you never elected.</div>
+            <div class="fact">Every single click, every search query, every moment of hesitation — <strong>it is all productised and sold</strong> to the highest bidder. You are not the customer of these platforms. You are the inventory being traded on a global marketplace of attention and influence.</div>
+            <div class="fact">The data broker industry is valued at over <strong>$300 billion</strong> globally. Your location, your interests, your fears, your desires — all packaged, labelled, and auctioned in milliseconds, without your informed consent.</div>
+            <div class="media-placeholder"><span class="tag">📷 ./public/data-profit.webp</span></div>
+        </div>
+    </section>
+
+    <!-- SCENE 3: Digital Colonisation -->
+    <section class="scene" id="scene3">
+        <div class="card gold">
+            <h2>🏛️ DIGITAL COLONISATION</h2>
+            <div class="divider"></div>
+            <div class="fact">Google dominates <strong>97-98% of search</strong> in India. WhatsApp, Facebook, and Instagram collectively control the entire communication layer for over a billion Indians — and there exists <strong>zero Indian-owned alternatives</strong> at any meaningful scale.</div>
+            <div class="fact">The East India Company once traded goods, spices, and textiles. <strong>Silicon Valley now trades your attention, your personal data, and your national sovereignty.</strong> The mechanism has changed; the power dynamic has not.</div>
+            <div class="fact">When a handful of foreign corporations control the infrastructure of information, communication, and commerce for an entire nation, <strong>that nation has effectively surrendered its digital sovereignty.</strong> Every byte of data generated by Indian citizens flows through servers in California, governed by American law.</div>
+            <div class="stat-large" style="font-size:1.3rem;">A handful of foreign corporations now control India's entire digital infrastructure — and there is no Indian alternative in sight. Until now.</div>
+            <div class="media-placeholder"><span class="tag">📷 ./public/digital-colonisation.webp</span></div>
+        </div>
+    </section>
+
+    <!-- SCENE 4: Free Expression Muzzled -->
+    <section class="scene" id="scene4">
+        <div class="card">
+            <h2>📢 THE MUZZLE ON FREE EXPRESSION</h2>
+            <div class="divider"></div>
+            <div class="fact">The satirical social media account <strong>"Cockroach Janta Party"</strong> — a parody account engaged in political satire — was blocked by a foreign platform and labelled a <em>"national threat"</em> by authorities. <strong>Satire is now treated as sedition.</strong></div>
+            <div class="fact">In a single year, the Indian government issued <span class="stat-large">over 24,300</span> blocking orders targeting online content. The compliance window for platforms was shrunk from <strong>36 hours to just 3 hours</strong> — making due process virtually impossible.</div>
+            <div class="fact">A <strong>foreign billionaire</strong>, sitting in an office in Silicon Valley, California, now possesses the unilateral power to decide what constitutes a threat to the Republic of India — and to silence it with a single click. <strong>This is not sovereignty. This is a crisis of democratic expression.</strong></div>
+            <div class="fact">When the digital public square is owned by someone else, <strong>free speech becomes a privilege granted at the pleasure of a foreign CEO</strong> — not a fundamental right protected by the Constitution of India.</div>
+        </div>
+    </section>
+
+    <!-- SCENE 5: Youth Exploitation Crisis -->
+    <section class="scene" id="scene5">
+        <div class="card gold">
+            <h2>💥 YOUTH EXPLOITATION CRISIS</h2>
+            <div class="divider"></div>
+            <div class="grid-stats">
+                <div class="stat-box"><span class="val">16–18%</span><span class="lbl">Youth Unemployment Rate in India</span></div>
+                <div class="stat-box"><span class="val">7.2%</span><span class="lbl">IT Sector Unemployment — 4-Year High</span></div>
+                <div class="stat-box"><span class="val">ZERO</span><span class="lbl">Legal Definition of "Intern" in Indian Labour Law</span></div>
+                <div class="stat-box"><span class="val">Millions</span><span class="lbl">Trapped in Unpaid or Underpaid Work</span></div>
+            </div>
+            <div class="fact">Indian labour law does <strong>NOT</strong> contain a legal definition of the word "intern." This is not an oversight — it is a deliberate legal vacuum that allows corporations to extract <strong>unlimited free labour</strong> from millions of young Indians without any legal obligation to compensate, protect, or even acknowledge them as workers.</div>
+            <div class="fact">The IT sector — once India's great economic hope — is now experiencing its <strong>highest unemployment rate in four years</strong>. Tens of thousands of engineering graduates emerge each year to find a job market that either offers nothing, or offers exploitation disguised as "opportunity."</div>
+            <div class="media-placeholder"><span class="tag">📷 ./public/youth-exploitation.webp</span></div>
+        </div>
+    </section>
+
+    <!-- SCENE 6: Unpaid Internship Trap -->
+    <section class="scene" id="scene6">
+        <div class="card">
+            <h2>🕳️ THE UNPAID INTERNSHIP TRAP</h2>
+            <div class="divider"></div>
+            <div class="fact">A Zepto delivery boy — when asked why he chose gig work over a corporate internship — responded bluntly: <strong>"Internship equals exploitation in our country."</strong> He is not wrong. Gig work at least pays something. Many "prestigious" internships pay nothing at all.</div>
+            <div class="fact">Unpaid internships have been <strong>normalised across Indian industry</strong> — even for graduates from premier institutions like the IIMs and IITs. The implicit promise of "experience" and "exposure" is used to justify months of free labour, with no guarantee of a job offer at the end.</div>
+            <div class="fact">The system is rigged: <strong>those who can afford to work for free</strong> (because of family wealth) gain the credentials and connections that lead to paid employment. Those who cannot afford to work for free are locked out — perpetuating a cycle of privilege and exclusion.</div>
+            <div class="stat-large">"Internships = exploitation in our country."<br><span style="font-size:0.85rem;color:var(--gold);">— A Zepto delivery worker who understood the truth</span></div>
+            <div class="media-placeholder"><span class="tag">🎬 ./public/internship-trap.webm</span></div>
+        </div>
+    </section>
+
+    <!-- SCENE 7: AI Carbon Footprint -->
+    <section class="scene" id="scene7">
+        <div class="card gold">
+            <h2>🌍 AI's HIDDEN CARBON FOOTPRINT</h2>
+            <div class="divider"></div>
+            <div class="fact">AI operations generated approximately <span class="stat-large">80 million tonnes</span> of CO₂ emissions in 2025 — and this figure is rising at an alarming rate with every new large language model deployed.</div>
+            <div class="fact">A staggering <span class="stat-large">60%</span> of all new data centre energy demand is currently being met by <strong>fossil fuels</strong>, not renewable energy sources. The "clean cloud" is a marketing myth — behind the interface, coal and gas plants are burning hotter than ever to power your AI assistants.</div>
+            <div class="fact">Global data centre electricity consumption is projected to <strong>double</strong> to approximately <span class="stat-large">1,000 terawatt-hours</span> by 2030 — an amount that would eclipse the total electricity consumption of entire industrialised nations like Japan or Germany.</div>
+            <div class="fact">Training a single large AI model can emit as much CO₂ as <strong>five cars over their entire lifetimes</strong> — from manufacturing to scrapping. Every time you use cloud AI, you are contributing to a carbon footprint that is invisible but immense.</div>
+        </div>
+    </section>
+
+    <!-- SCENE 8: THE KALKI ANSWER -->
+    <section class="scene" id="scene8">
+        <div class="card" style="border-color:rgba(0,229,255,0.55); box-shadow:0 20px 50px rgba(0,0,0,0.5),0 0 45px rgba(0,229,255,0.18);">
+            <h1 style="font-size:clamp(1.6rem,3.5vw,2.4rem);">✦ THE KALKI ANSWER</h1>
+            <div class="divider" style="width:100px;"></div>
+            <div class="fact">⚡ <strong>Browser-native, private AI</strong> — runs entirely on your device. No data centre. No cloud server. No tracking. No surveillance. Your intelligence stays yours.</div>
+            <div class="fact">🔓 <strong>100% open-source.</strong> Zero water consumption for inference. Your device becomes the server — no cooling towers, no evaporated drinking water, no environmental guilt.</div>
+            <div class="fact">🌱 <span class="stat-large">99% lower</span> carbon footprint per query compared to any cloud-based AI model. While others burn fossil fuels to answer questions, Kalki runs on the silicon already in your pocket.</div>
+            <div class="fact">🇮🇳 <strong>Built for India. Built for sovereignty.</strong> No foreign billionaire can silence your intelligence. No data centre can log your queries. No corporation can monetise your curiosity.</div>
+            <div class="stat-large" style="font-size:1.4rem; margin-top:1.2rem;">kalkicore.vercel.app<br><span style="font-size:0.8rem;color:var(--gold);">Your Device. Your Intelligence. Your Sovereignty.</span></div>
+            <div class="media-placeholder"><span class="tag">📷 ./public/kalki-answer.webp</span></div>
+        </div>
+    </section>
+
+    <!-- SCENE 9: Compensation & Growth -->
+    <section class="scene" id="scene9">
+        <div class="card gold">
+            <h2>💰 HOW WE COMPENSATE YOU</h2>
+            <div class="divider"></div>
+            <div class="grid-stats">
+                <div class="stat-box"><span class="lbl">Month 1</span><span class="val">Training</span><span class="lbl">Unpaid · Foundation Building</span></div>
+                <div class="stat-box"><span class="lbl">Month 2 – 3</span><span class="val">Up to ₹7,000</span><span class="lbl">Performance-Based Pay</span></div>
+                <div class="stat-box"><span class="lbl">Senior BD Analyst</span><span class="val">₹2,000–3,000</span><span class="lbl">Fixed Salary + Performance Bonus</span></div>
+                <div class="stat-box"><span class="lbl">PPO Offer</span><span class="val">₹15,000–18,000</span><span class="lbl">+ Equity Stake in the Company</span></div>
+            </div>
+            <div class="fact">📜 Every node member receives a <strong>Government-recognised MSME certificate</strong> validating your professional contribution — real credentials, not empty promises.</div>
+            <div class="fact">🎓 <strong>Free Google Data Analytics Professional Certificate</strong> course included — the same certification that costs ₹14,000+ on Coursera, provided to you at zero cost as part of your growth trajectory.</div>
+            <div class="fact">📈 This is not a stipend for attendance. <strong>This is compensation for outcomes.</strong> You define your growth. You earn based on the value you create — not the hours you warm a chair.</div>
+        </div>
+    </section>
+
+    <!-- SCENE 10: Join as a Node -->
+    <section class="scene" id="scene10">
+        <div class="card">
+            <h2>🤝 JOIN A TEAM, NOT A HIERARCHY</h2>
+            <div class="divider"></div>
+            <div class="fact">🚫 <strong>No daily or weekly call targets.</strong> We don't measure your worth by how many phone calls you make. Outcome-based ownership means your results speak — not your timesheet.</div>
+            <div class="fact">🔗 <strong>Direct, unfiltered access</strong> to the CTO, founding team, and core engineers. Flat structure. Radical transparency. Your ideas reach the people who can act on them — immediately.</div>
+            <div class="fact">📊 Learn <strong>real, market-valuable skills:</strong> Supabase, Redis, conversion funnel analytics, cohort analysis, user behaviour modelling. Not just theory — hands-on, production-grade data work that employers actually pay for.</div>
+            <div class="fact">🌐 You are not joining a company. You are <strong>becoming a NODE</strong> in a decentralised intelligence network — a peer in a system designed to replace centralised, extractive tech with something sovereign, sustainable, and Indian.</div>
+            <div class="stat-large">You are not an employee.<br>You are a <span style="color:var(--gold);">NODE</span> in a decentralised intelligence network.</div>
+        </div>
+    </section>
+
+    <!-- SCENE 11: REPOST OR REGRET -->
+    <section class="scene" id="scene11">
+        <div class="card" style="text-align:center; border-color:rgba(0,229,255,0.5);">
+            <h1 style="font-size:clamp(1.6rem,4vw,2.5rem);">REPOST OR REGRET</h1>
+            <div class="divider" style="margin:1rem auto; width:80px;"></div>
+            <div class="fact" style="border-left:none;padding-left:0;font-size:1.1rem;text-align:center;">If you haven't reposted our LinkedIn post yet, <strong>do it NOW.</strong></div>
+            <div class="fact" style="border-left:none;padding-left:0;text-align:center;">We only consider candidates who <strong>prove their commitment through action</strong> — not words, not résumés, not promises.</div>
+            <div class="fact" style="border-left:none;padding-left:0;text-align:center;">Repost. Tag. Show us you understand what we're building — and that you want to be part of it.</div>
+            <a href="#" id="repostCta" class="btn-cta" style="font-size:1rem;padding:0.9rem 2.8rem;">⚡ ACTIVATE YOUR NODE</a>
+            <div class="media-placeholder" style="margin-top:1.5rem;"><span class="tag">🎬 ./public/repost-regret.webm</span></div>
+        </div>
+    </section>
+
+    <footer>
+        <span class="cyan">KALKI TECHNOLOGIES</span> — kalkicore.vercel.app — hello@kalki.tech — +91 6261031710<br>
+        <span style="font-size:0.6rem;opacity:0.45;">© 2026 Kalki Intelligency. Decentralised. Sovereign. Unstoppable.</span>
+    </footer>
+
+    <!-- Three.js Particle Field (Elegant, Professional) -->
+    <script type="module">
+        import * as THREE from 'three';
+
+        const canvas = document.getElementById('particleCanvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 50);
+        camera.position.set(0, 0, 8);
+
+        // ── Elegant Particle Streams ──
+        const streamsGroup = new THREE.Group();
+        scene.add(streamsGroup);
+
+        // Horizontal flowing light lines
+        const lineCount = 30;
+        const lines = [];
+        for (let i = 0; i < lineCount; i++) {
+            const curve = new THREE.CatmullRomCurve3([
+                new THREE.Vector3((Math.random() - 0.5) * 12, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 4),
+                new THREE.Vector3((Math.random() - 0.5) * 12, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 4),
+                new THREE.Vector3((Math.random() - 0.5) * 12, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 4),
+            ]);
+            const points = curve.getPoints(60);
+            const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+            const lineMat = new THREE.LineBasicMaterial({
+                color: new THREE.Color().setHSL(0.52 + Math.random() * 0.08, 0.7, 0.4 + Math.random() * 0.35),
+                transparent: true,
+                opacity: 0.15 + Math.random() * 0.25,
+                linewidth: 1,
+            });
+            const line = new THREE.Line(lineGeo, lineMat);
+            line.userData = {
+                speed: 0.3 + Math.random() * 0.7,
+                offset: Math.random() * Math.PI * 2,
+                amplitude: 0.3 + Math.random() * 0.9,
+            };
+            streamsGroup.add(line);
+            lines.push(line);
+        }
+
+        // ── Floating Light Orbs ──
+        const orbCount = 80;
+        const orbsGeo = new THREE.BufferGeometry();
+        const orbPositions = new Float32Array(orbCount * 3);
+        const orbSizes = new Float32Array(orbCount);
+        for (let i = 0; i < orbCount; i++) {
+            orbPositions[i * 3] = (Math.random() - 0.5) * 14;
+            orbPositions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+            orbPositions[i * 3 + 2] = (Math.random() - 0.5) * 6;
+            orbSizes[i] = Math.random() * 3 + 0.8;
+        }
+        orbsGeo.setAttribute('position', new THREE.BufferAttribute(orbPositions, 3));
+        orbsGeo.setAttribute('size', new THREE.BufferAttribute(orbSizes, 1));
+        const orbsMat = new THREE.PointsMaterial({
+            color: 0x88ccff,
+            size: 0.025,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            opacity: 0.45,
+        });
+        const orbs = new THREE.Points(orbsGeo, orbsMat);
+        orbs.name = 'orbs';
+        scene.add(orbs);
+
+        // ── Central Energy Core (Subtle) ──
+        const coreGroup = new THREE.Group();
+        const ringGeo = new THREE.TorusGeometry(0.55, 0.008, 32, 80);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x00E5FF, transparent: true, opacity: 0.3,
+            depthWrite: false });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        coreGroup.add(ring);
+        const ring2 = new THREE.Mesh(new THREE.TorusGeometry(0.7, 0.005, 24, 64),
+            new THREE.MeshBasicMaterial({ color: 0xC6A43F, transparent: true, opacity: 0.2, depthWrite: false }));
+        ring2.rotation.x = Math.PI / 3;
+        coreGroup.add(ring2);
+        const coreDot = new THREE.Mesh(new THREE.SphereGeometry(0.04, 16, 16),
+            new THREE.MeshBasicMaterial({ color: 0x00E5FF, transparent: true, opacity: 0.6, depthWrite: false }));
+        coreGroup.add(coreDot);
+        coreGroup.position.set(0, 0, -1);
+        scene.add(coreGroup);
+
+        // ── Animation ──
+        const clock = new THREE.Clock();
+        let globalTime = 0;
+        const scrollParams = {
+            orbOpacity: 0.45,
+            ringOpacity: 0.3,
+            lineOpacityMul: 1,
+            coreScale: 1,
+            rotationSpeed: 0.3,
+        };
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const dt = Math.min(clock.getDelta(), 0.1);
+            globalTime += dt;
+
+            // Animate lines
+            lines.forEach((line, i) => {
+                line.rotation.y += dt * line.userData.speed * 0.25;
+                line.rotation.x += dt * line.userData.speed * 0.15;
+                line.position.y += Math.sin(globalTime * 0.7 + line.userData.offset) * dt * line.userData
+                    .amplitude * 0.3;
+                line.material.opacity = (0.15 + Math.sin(globalTime * 1.2 + line.userData.offset) * 0.08) *
+                    scrollParams.lineOpacityMul;
+            });
+
+            // Orbs rotation
+            orbs.rotation.y += dt * scrollParams.rotationSpeed * 0.4;
+            orbs.rotation.x += dt * scrollParams.rotationSpeed * 0.2;
+            orbs.material.opacity = scrollParams.orbOpacity;
+
+            // Core ring
+            ring.rotation.z += dt * 0.5;
+            ring.rotation.x += dt * 0.3;
+            ring2.rotation.z -= dt * 0.4;
+            ring2.rotation.y += dt * 0.35;
+            ring.material.opacity = scrollParams.ringOpacity;
+            ring2.material.opacity = scrollParams.ringOpacity * 0.7;
+            coreGroup.scale.setScalar(scrollParams.coreScale);
+            coreDot.scale.setScalar(1 + Math.sin(globalTime * 3) * 0.4);
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ── GSAP Scroll-Driven Particle Transformations ──
+        gsap.registerPlugin(ScrollTrigger);
+        const totalScroll = document.body.scrollHeight - window.innerHeight;
+
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 0.7,
+            }
+        })
+            .to(scrollParams, {
+                orbOpacity: 0.7,
+                ringOpacity: 0.55,
+                lineOpacityMul: 1.4,
+                coreScale: 1.3,
+                rotationSpeed: 0.55,
+                duration: 0.25,
+                ease: "power2.inOut",
+            }, 0)
+            .to(scrollParams, {
+                orbOpacity: 0.3,
+                ringOpacity: 0.15,
+                lineOpacityMul: 0.65,
+                coreScale: 0.75,
+                rotationSpeed: 0.18,
+                duration: 0.25,
+                ease: "power2.inOut",
+            }, 0.35)
+            .to(scrollParams, {
+                orbOpacity: 0.5,
+                ringOpacity: 0.35,
+                lineOpacityMul: 1.05,
+                coreScale: 1.05,
+                rotationSpeed: 0.35,
+                duration: 0.3,
+                ease: "power2.inOut",
+            }, 0.65);
+
+        window.__scrollParams = scrollParams;
+    </script>
+
+    <!-- GSAP UI Animations -->
+    <script>
+        (function() {
+            gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+            const menuBtn = document.getElementById('menuBtn');
+            const navPanel = document.getElementById('navPanel');
+            const navItems = document.querySelectorAll('#navList li');
+            const header = document.getElementById('header');
+            const repostCta = document.getElementById('repostCta');
+
+            // ── MENU ──
+            let menuOpen = false;
+
+            function openMenu() {
+                menuOpen = true;
+                navPanel.classList.add('open');
+                menuBtn.classList.add('open');
+                gsap.fromTo(navPanel, { opacity: 0, x: 40, scale: 0.93 }, { duration: 0.45, opacity: 1, x: 0, scale: 1,
+                    ease: 'back.out(0.65)' });
+            }
+
+            function closeMenu() {
+                menuOpen = false;
+                navPanel.classList.remove('open');
+                menuBtn.classList.remove('open');
+                gsap.to(navPanel, { duration: 0.3, opacity: 0, x: 25, scale: 0.95, ease: 'power2.in' });
+            }
+            menuBtn.addEventListener('click', (e) => { e.stopPropagation();
+                menuOpen ? closeMenu() : openMenu(); });
+            document.addEventListener('click', (e) => { if (menuOpen && !navPanel.contains(e.target) && !menuBtn
+                    .contains(e.target)) closeMenu(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOpen) { closeMenu();
+                    menuBtn.focus(); } });
+
+            // ── NAV CLICK ──
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const idx = parseInt(item.dataset.target);
+                    const target = document.getElementById('scene' + idx);
+                    if (target) {
+                        gsap.to(window, { duration: 1.1, scrollTo: { y: target, offsetY: 55 },
+                            ease: 'power3.inOut' });
+                    }
+                    closeMenu();
+                    createFlash();
+                });
+            });
+
+            function createFlash() {
+                const flash = document.createElement('div');
+                flash.style.cssText = `
+                    position:fixed;inset:0;z-index:99999;pointer-events:none;
+                    background:radial-gradient(circle,rgba(0,229,255,0.15),transparent 65%);
+                    transition:opacity 0.5s;opacity:1;
+                `;
+                document.body.appendChild(flash);
+                requestAnimationFrame(() => { flash.style.opacity = '0';
+                    setTimeout(() => flash.remove(), 500); });
+            }
+
+            // ── HEADER SCROLL ──
+            window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 45));
+
+            // ── SCROLL ANIMATIONS FOR EVERY ELEMENT ──
+            const scenes = document.querySelectorAll('.scene');
+            scenes.forEach((scene, i) => {
+                const card = scene.querySelector('.card');
+                // Card reveal
+                if (card) {
+                    gsap.fromTo(card, { opacity: 0, y: 55, scale: 0.94 }, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.9,
+                        ease: 'power3.out',
+                        scrollTrigger: { trigger: scene, start: 'top 82%', toggleActions: 'play none none reverse' },
+                    });
+                    // Card hover micro-glitch
+                    card.addEventListener('mouseenter', () => {
+                        gsap.to(card, { duration: 0.1, x: 1.5, y: -1.5, repeat: 2, yoyo: true, ease: 'none' });
+                    });
+                }
+                // Headings
+                const headings = scene.querySelectorAll('h1, h2');
+                headings.forEach((h, j) => {
+                    gsap.fromTo(h, { opacity: 0, x: -25, filter: 'blur(4px)' }, {
+                        opacity: 1,
+                        x: 0,
+                        filter: 'blur(0px)',
+                        duration: 0.7,
+                        delay: j * 0.12,
+                        ease: 'power2.out',
+                        scrollTrigger: { trigger: scene, start: 'top 80%', toggleActions: 'play none none reverse' },
+                    });
+                });
+                // Dividers
+                const dividers = scene.querySelectorAll('.divider');
+                dividers.forEach((d, j) => {
+                    gsap.fromTo(d, { width: 0, opacity: 0 }, {
+                        width: d.offsetWidth || 60,
+                        opacity: 1,
+                        duration: 0.6,
+                        delay: j * 0.1 + 0.2,
+                        ease: 'power3.out',
+                        scrollTrigger: { trigger: scene, start: 'top 79%', toggleActions: 'play none none reverse' },
+                    });
+                });
+                // Stat boxes
+                const statBoxes = scene.querySelectorAll('.stat-box');
+                statBoxes.forEach((box, j) => {
+                    gsap.fromTo(box, { opacity: 0, y: 35, scale: 0.85 }, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.5,
+                        delay: j * 0.07,
+                        ease: 'back.out(0.5)',
+                        scrollTrigger: { trigger: scene, start: 'top 78%', toggleActions: 'play none none reverse' },
+                    });
+                    // Hover micro-interaction
+                    box.addEventListener('mouseenter', () => {
+                        gsap.to(box, { duration: 0.2, scale: 1.03, ease: 'power2.out' });
+                    });
+                    box.addEventListener('mouseleave', () => {
+                        gsap.to(box, { duration: 0.2, scale: 1, ease: 'power2.out' });
+                    });
+                });
+                // Fact lines
+                const facts = scene.querySelectorAll('.fact');
+                facts.forEach((f, j) => {
+                    gsap.fromTo(f, { opacity: 0, x: -20 }, {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.45,
+                        delay: j * 0.09 + 0.15,
+                        ease: 'power2.out',
+                        scrollTrigger: { trigger: scene, start: 'top 76%', toggleActions: 'play none none reverse' },
+                    });
+                    // Hover micro: border glow
+                    f.addEventListener('mouseenter', () => {
+                        gsap.to(f, { duration: 0.3, borderLeftColor: '#00E5FF', paddingLeft: '1.2rem',
+                            ease: 'power2.out' });
+                    });
+                    f.addEventListener('mouseleave', () => {
+                        gsap.to(f, { duration: 0.3, borderLeftColor: 'rgba(0,229,255,0.35)',
+                            paddingLeft: '0.9rem', ease: 'power2.out' });
+                    });
+                });
+                // Stat-large
+                const statLarges = scene.querySelectorAll('.stat-large');
+                statLarges.forEach((sl, j) => {
+                    gsap.fromTo(sl, { opacity: 0, scale: 0.9, textShadow: '0 0 0px rgba(0,229,255,0)' }, {
+                        opacity: 1,
+                        scale: 1,
+                        textShadow: '0 0 28px rgba(0,229,255,0.45)',
+                        duration: 0.6,
+                        delay: j * 0.1 + 0.25,
+                        ease: 'back.out(0.45)',
+                        scrollTrigger: { trigger: scene, start: 'top 77%', toggleActions: 'play none none reverse' },
+                    });
+                });
+                // Media placeholders
+                const media = scene.querySelectorAll('.media-placeholder');
+                media.forEach((m, j) => {
+                    gsap.fromTo(m, { opacity: 0, y: 30 }, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.55,
+                        delay: j * 0.12 + 0.3,
+                        ease: 'power2.out',
+                        scrollTrigger: { trigger: scene, start: 'top 75%', toggleActions: 'play none none reverse' },
+                    });
+                });
+            });
+
+            // ── REPOST CTA ──
+            if (repostCta) {
+                repostCta.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert(
+                        '🔁 Repost our LinkedIn post:\nhttps://www.linkedin.com/feed/update/urn:li:activity:7467526710817759232\n\nThen reply "DONE – Reposted" to confirm your GD slot.'
+                    );
+                    gsap.to(repostCta, { duration: 0.1, scale: 0.9, repeat: 3, yoyo: true, ease: 'power2.out' });
+                });
+            }
+
+            // ── CURSOR TRAIL PARTICLES ──
+            document.body.addEventListener('mousemove', (e) => {
+                if (Math.random() > 0.5) return;
+                const p = document.createElement('div');
+                p.style.cssText = `
+                    position:fixed;width:3px;height:3px;background:#00E5FF;border-radius:50%;
+                    left:${e.clientX}px;top:${e.clientY}px;pointer-events:none;z-index:99999;
+                    box-shadow:0 0 7px #00E5FF,0 0 12px rgba(0,229,255,0.4);opacity:0.8;
+                `;
+                document.body.appendChild(p);
+                gsap.to(p, { duration: 0.55, opacity: 0, x: (Math.random() - 0.5) * 28, y: (Math.random() - 0.5) * 28,
+                    scale: 0, ease: 'power3.out', onComplete: () => p.remove() });
+            });
+
+            // ── KEYBOARD NAV ──
+            let currentIdx = 0;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) { const idx = Array.from(scenes).indexOf(entry
+                            .target); if (idx >= 0) currentIdx = idx; } });
+            }, { threshold: 0.4 });
+            scenes.forEach(s => observer.observe(s));
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowDown' || e.key === 'j') {
+                    e.preventDefault();
+                    currentIdx = Math.min(currentIdx + 1, scenes.length - 1);
+                    gsap.to(window, { duration: 1, scrollTo: { y: scenes[currentIdx], offsetY: 55 },
+                        ease: 'power3.inOut' });
+                    createFlash();
+                } else if (e.key === 'ArrowUp' || e.key === 'k') {
+                    e.preventDefault();
+                    currentIdx = Math.max(currentIdx - 1, 0);
+                    gsap.to(window, { duration: 1, scrollTo: { y: scenes[currentIdx], offsetY: 55 },
+                        ease: 'power3.inOut' });
+                    createFlash();
+                }
+            });
+
+            // ── LOGO PERIODIC GLITCH ──
+            setInterval(() => {
+                if (Math.random() > 0.78) {
+                    const logoText = document.querySelector('.logo-text');
+                    if (logoText) {
+                        gsap.to(logoText, { duration: 0.03, textShadow: '0 0 10px #00E5FF, 2px 0 #C6A43F, -2px 0 #00E5FF',
+                            repeat: 4, yoyo: true, ease: 'none' });
+                    }
+                }
+            }, 3500);
+
+            console.log('%c⚡ KALKI INTELLIGENCY %cCINEMATIC JOURNEY %c✦',
+                'color:#00E5FF;font-size:1.4em;font-family:Orbitron;',
+                'color:#C6A43F;',
+                'color:#fff;');
+            console.log('%c12 Scenes · Full Data · Micro-Interactions · Scroll-Biased Everything',
+                'color:#9098b0;');
+            console.log('%c📁 Assets: ./public/*.webp & ./public/*.webm — Replace with real media for full experience.',
+                'color:#e04040;font-family:monospace;');
+        })();
+    </script>
+</body>
+</html>
