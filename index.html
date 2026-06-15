@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <title>KALKI INTELLIGENCE | HIRINGS </title>
+    <title>KALKI INTELLIGENCE | HIRINGS</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Orbitron:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -54,10 +54,7 @@
             line-height: 1.65;
             position: relative;
         }
-        /* Fixed Background Layers */
-        #particleCanvas {
-            position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.7;
-        }
+        #particleCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.7; }
         .bg-overlay {
             position: fixed; inset: 0; z-index: 1; pointer-events: none;
             background:
@@ -74,7 +71,6 @@
             opacity: 0.018;
             background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.12) 2px, rgba(255, 255, 255, 0.12) 3px);
         }
-        /* Header */
         #header {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
             padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
@@ -111,7 +107,6 @@
             50% { background-position: 100% 50%; }
         }
         .logo-sub { font-size: 0.5rem; letter-spacing: 4px; color: #9098b0; display: block; }
-        /* Menu Button */
         #menuBtn {
             width: 44px; height: 44px; border-radius: 50%;
             background: rgba(0, 229, 255, 0.06); border: 1.5px solid rgba(0, 229, 255, 0.45);
@@ -123,7 +118,6 @@
         #menuBtn.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
         #menuBtn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
         #menuBtn.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
-        /* Navigation Panel */
         #navPanel {
             position: fixed; top: 75px; right: 14px; width: 300px; max-height: 70vh; overflow-y: auto;
             background: rgba(6, 14, 30, 0.9); backdrop-filter: blur(28px);
@@ -154,7 +148,6 @@
             color: #fff; transform: translateX(4px); box-shadow: 0 0 18px rgba(0, 229, 255, 0.08);
         }
         #navPanel li .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; box-shadow: 0 0 7px var(--cyan); }
-        /* Sections */
         .scene {
             min-height: 100vh; display: flex; align-items: center; justify-content: center;
             padding: 7rem 2rem 5rem; position: relative; z-index: 10;
@@ -264,7 +257,7 @@
         }
         .media-placeholder:hover { border-color: rgba(0, 229, 255, 0.55); background: rgba(0, 229, 255, 0.07); box-shadow: 0 0 25px rgba(0, 229, 255, 0.08); }
 
-        /* ── High‑end Form Styles ── */
+        /* Form Styles */
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
         .form-group { margin-bottom: 1.2rem; }
         label {
@@ -336,14 +329,14 @@
             <div class="logo-icon">⚡</div>
             <div>
                 <span class="logo-text">KALKI</span>
-                <small class="logo-sub">TECHNOLOGIES</small>
+                <small class="logo-sub">INTELLIGENCE</small>
             </div>
         </div>
         <div id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></div>
     </header>
 
     <nav id="navPanel">
-        <div class="nav-title">✦ INFO NAVIGATION ✦</div>
+        <div class="nav-title">✦ NODE NAVIGATION ✦</div>
         <ul id="navList">
             <li data-target="0"><span class="dot"></span>The Myth of Stability</li>
             <li data-target="1"><span class="dot"></span>AI's Water Crisis</li>
@@ -363,7 +356,7 @@
     </nav>
 
     <!-- SCENE 0 -->
-    <section class="scene" id="scene0"><div class="card"><h1>THE MYTH OF STABILITY</h1><div class="divider"></div><div class="grid-stats"><div class="stat-box"><span class="val counter" data-target="244000">244000</span><span class="lbl">Tech Jobs Erased 2025</span></div><div class="stat-box"><span class="val counter" data-target="69">69</span><span class="lbl">US Layoffs</span></div><div class="stat-box"><span class="val counter" data-target="50000">50000</span><span class="lbl">Direct AI Replacements</span></div><div class="stat-box"><span class="val counter" data-target="142000">142000</span><span class="lbl">2026 Layoffs</span></div></div><div class="fact">These corporations are not loyal to you — they are loyal to their stock price. Every quarter, human beings become liabilities on a balance sheet, expendable the moment an algorithm outperforms them.</div><div class="fact">The narrative of "job stability" is a carefully crafted illusion. Your desk, your title, your salary — all vanish the instant the spreadsheet demands it.</div><div class="media-placeholder"><span>📷 ./public/myth-stability.webp</span></div></div></section>
+    <section class="scene" id="scene0"><div class="card"><h1>THE MYTH OF STABILITY</h1><div class="divider"></div><div class="grid-stats"><div class="stat-box"><span class="val counter" data-target="244000">244000</span><span class="lbl">Tech Jobs Erased 2025</span></div><div class="stat-box"><span class="val counter" data-target="69">69%</span><span class="lbl">US Layoffs</span></div><div class="stat-box"><span class="val counter" data-target="50000">50000</span><span class="lbl">Direct AI Replacements</span></div><div class="stat-box"><span class="val counter" data-target="142000">142000</span><span class="lbl">2026 Layoffs</span></div></div><div class="fact">These corporations are not loyal to you — they are loyal to their stock price. Every quarter, human beings become liabilities on a balance sheet, expendable the moment an algorithm outperforms them.</div><div class="fact">The narrative of "job stability" is a carefully crafted illusion. Your desk, your title, your salary — all vanish the instant the spreadsheet demands it.</div><div class="media-placeholder"><span>📷 ./public/myth-stability.webp</span></div></div></section>
 
     <!-- SCENE 1 -->
     <section class="scene" id="scene1"><div class="card gold"><h2>🌊 AI's Invisible Victim: Fresh Water</h2><div class="divider"></div><div class="fact">A <strong>single AI query</strong> can consume between <span class="stat-large">3.5 ml – 500 ml</span> of fresh drinking water — depending on model complexity and cloud region.</div><div class="fact">By <strong>2027</strong>, AI data centres will demand <span class="stat-large">4.2 – 6.6 billion m³</span> of water annually — roughly <strong>half of the United Kingdom's total yearly water usage.</strong></div><div class="fact">Global data centres already consume approximately <span class="stat-large">560 billion litres</span> of fresh water each year — and this number is rising exponentially.</div><div class="media-placeholder"><span>🎬 ./public/water-crisis.webm</span></div></div></section>
@@ -396,7 +389,7 @@
         <div class="fact">📜 Every node receives a <strong>government‑recognised MSME certificate</strong> and a <strong>free Google Data Analytics Professional Certificate</strong> (worth ₹14k+ on Coursera).</div>
     </div></section>
 
-    <!-- SCENE 10: Data Analyst Career Tracks (now 12 roles) -->
+    <!-- SCENE 10: Data Analyst Career Tracks (12 roles) -->
     <section class="scene" id="scene10"><div class="card"><h2>📊 DATA ANALYST CAREER TRACKS (12 PATHS)</h2><div class="divider"></div>
         <div class="grid-stats" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.8rem;">
             <div class="stat-box"><span class="val" style="font-size:1rem;">🧑‍💼 HR Analyst</span><span class="lbl">People analytics, attrition prediction, workforce planning.</span></div>
@@ -416,14 +409,14 @@
     </div></section>
 
     <!-- SCENE 11: Join as Node -->
-    <section class="scene" id="scene11"><div class="card"><h2>🤝 JOIN A TEAM, TO GROW YOURSELF</h2><div class="divider"></div><div class="fact">🚫 <strong>No daily/weekly call targets.</strong> Outcome‑based ownership. Your results define your worth.</div><div class="fact">🔗 <strong>Direct access</strong> to the CTO and founding team. Flat structure. Radical transparency.</div><div class="fact">📊 Learn <strong>real, market‑valuable skills:</strong> Supabase, Redis, funnel analytics, cohort modelling — hands‑on data work.</div><div class="stat-large">You are not an employee.<br>You are a <span style="color:var(--gold);">NODE</span> in a decentralised intelligence network.</div></div></section>
+    <section class="scene" id="scene11"><div class="card"><h2>🤝 JOIN A TEAM, NOT A HIERARCHY</h2><div class="divider"></div><div class="fact">🚫 <strong>No daily/weekly call targets.</strong> Outcome‑based ownership. Your results define your worth.</div><div class="fact">🔗 <strong>Direct access</strong> to the CTO and founding team. Flat structure. Radical transparency.</div><div class="fact">📊 Learn <strong>real, market‑valuable skills:</strong> Supabase, Redis, funnel analytics, cohort modelling — hands‑on data work.</div><div class="stat-large">You are not an employee.<br>You are a <span style="color:var(--gold);">NODE</span> in a decentralised intelligence network.</div></div></section>
 
     <!-- SCENE 12: REPOST -->
     <section class="scene" id="scene12"><div class="card" style="text-align:center; border-color:rgba(0,229,255,0.5);"><h1 style="font-size:clamp(1.6rem,4vw,2.5rem);">REPOST OR REGRET</h1><div class="divider" style="margin:1rem auto;width:80px;"></div><div class="fact" style="border-left:none;padding-left:0;font-size:1.1rem;text-align:center;">If you haven't reposted our LinkedIn post, <strong>do it NOW.</strong></div><div class="fact" style="border-left:none;padding-left:0;text-align:center;">We only consider candidates who prove commitment through action.</div><a href="#" id="repostCta" class="btn-cta">⚡ REPOST & ACTIVATE</a></div></section>
 
-    <!-- SCENE 13: APPLICATION FORM (High‑end responsive redesign) -->
+    <!-- SCENE 13: APPLICATION FORM -->
     <section class="scene" id="scene13"><div class="card" style="border-color:rgba(0,229,255,0.6);">
-        <h2 style="border-left-color:var(--cyan);">📋 APPLY AS A SOLDIER</h2>
+        <h2 style="border-left-color:var(--cyan);">📋 APPLY AS A NODE</h2>
         <div class="divider"></div>
         <form id="applyForm">
             <div class="form-grid">
@@ -468,12 +461,12 @@
     </div></section>
 
     <footer>
-        <span class="cyan">KALKI TECHNOLOGIES</span> — kalkicore.vercel.app — hello@kalki.tech — +91 6261031710<br>
-        <span style="font-size:0.6rem;opacity:0.45;">© 2026 Kalki Intelligence. Decentralised. Sovereign. Unstoppable.</span>
+        <span class="cyan">KALKI TECHNOLOGIES</span> — kalkicore.vercel.app  — +91 6261031710<br>
+        <span style="font-size:0.6rem;opacity:0.45;">© 2025 Kalki Intelligence. Decentralised. Sovereign. Unstoppable.</span>
     </footer>
     <div id="backToTop">↑</div>
 
-    <!-- Three.js Particle Field (unchanged) -->
+    <!-- Three.js Particle Field -->
     <script type="module">
         import * as THREE from 'three';
         const canvas = document.getElementById('particleCanvas');
@@ -564,7 +557,7 @@
             .to(scrollParams, { orbOpacity: 0.5, ringOpacity: 0.35, lineOpacityMul: 1.05, coreScale: 1.05, rotationSpeed: 0.35, duration: 0.3, ease: "power2.inOut" }, 0.65);
     </script>
 
-    <!-- UI Animations & Logic (counters fixed) -->
+    <!-- UI Animations & Logic (with hardcoded Supabase keys) -->
     <script>
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -618,7 +611,7 @@
         // Header scroll effect
         window.addEventListener('scroll', () => document.getElementById('header').classList.toggle('scrolled', window.scrollY > 45));
 
-        // ── FIXED COUNTER ANIMATION ──
+        // Counter animation
         document.querySelectorAll('.counter').forEach(el => {
             const target = parseFloat(el.dataset.target);
             if (isNaN(target)) return;
@@ -699,9 +692,9 @@
         // Logo glitch
         setInterval(() => { if (Math.random() > 0.78) { const lt = document.querySelector('.logo-text'); if (lt) gsap.to(lt, { duration: 0.03, textShadow: '0 0 10px #00E5FF', repeat: 4, yoyo: true }); } }, 3500);
 
-        // ── Supabase Form Submission ──
-        const SUPABASE_URL = 'https://your-project.supabase.co';   // ← REPLACE
-        const SUPABASE_ANON_KEY = 'your-anon-key';                // ← REPLACE
+        // ── Supabase Form Submission (hardcoded keys) ──
+        const SUPABASE_URL = 'https://tqskdziemdwxqtlktwhx.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxc2tkemllbWR3eHF0bGt0d2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1MTM2MTcsImV4cCI6MjA5NzA4OTYxN30.5SmcYsogmthIstqZHOhcW2ik2vDFc7GbHpRd4xhoXtE';
 
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const form = document.getElementById('applyForm');
@@ -712,16 +705,18 @@
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
             formMsg.innerHTML = '<span style="color:#00E5FF;">Submitting...</span>';
+
             const { error } = await supabase.from('applications').insert([data]);
             if (error) {
                 formMsg.innerHTML = `<span style="color:#e04040;">Error: ${error.message}</span>`;
+                console.error('Supabase insert error:', error);
             } else {
                 formMsg.innerHTML = '<span style="color:#C6A43F;">✅ Application received! We’ll review and get back to you.</span>';
                 form.reset();
             }
         });
 
-        console.log('%c⚡ KALKI INTELLIGENCE %c ENRICHMENT OF AI %c✦', 'color:#00E5FF;font-size:1.4em;', 'color:#C6A43F;', 'color:#fff;');
+        console.log('%c⚡ KALKI INTELLIGENCE %cCINEMATIC JOURNEY %c✦', 'color:#00E5FF;font-size:1.4em;', 'color:#C6A43F;', 'color:#fff;');
     </script>
 </body>
 </html>
