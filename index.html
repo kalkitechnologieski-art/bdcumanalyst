@@ -516,27 +516,47 @@
             margin: 1rem 0;
             border-radius: 2px;
         }
-        .media-placeholder {
+
+        /* ── Media Styles ── */
+        .media-wrap {
             width: 100%;
             max-width: 480px;
-            aspect-ratio: 16/9;
-            border-radius: 16px;
-            background: rgba(0, 229, 255, 0.04);
-            border: 1px dashed rgba(0, 229, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #7a8298;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 1.5px;
             margin: 1rem auto;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 229, 255, 0.2);
             transition: all 0.4s;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         }
-        .media-placeholder:hover {
+        .media-wrap:hover {
             border-color: rgba(0, 229, 255, 0.55);
-            background: rgba(0, 229, 255, 0.07);
-            box-shadow: 0 0 25px rgba(0, 229, 255, 0.08);
+            box-shadow: 0 0 35px rgba(0, 229, 255, 0.12);
+            transform: scale(1.01);
+        }
+        .media-wrap img,
+        .media-wrap video {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            background: #050b18;
+        }
+        .media-wrap video {
+            background: #000;
+        }
+        .media-caption {
+            display: block;
+            text-align: center;
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            color: #7a8298;
+            letter-spacing: 0.5px;
+            padding: 0.3rem 0 0.2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 0.2rem;
+            opacity: 0.6;
         }
 
         /* ── Form Styles ── */
@@ -583,8 +603,6 @@
             box-shadow: 0 0 18px rgba(0, 229, 255, 0.3);
             background: rgba(0, 229, 255, 0.04);
         }
-
-        /* ── SELECT / DROPDOWN FIX ── */
         select {
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2300E5FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
@@ -612,7 +630,6 @@
             background: #0a1428;
             color: #f0f0f8;
         }
-
         textarea {
             resize: vertical;
             min-height: 80px;
@@ -691,8 +708,6 @@
             transition: width 0.05s linear;
             width: 0%;
         }
-
-        /* ── Form flash feedback ── */
         .form-flash {
             animation: formFlash 0.5s ease;
         }
@@ -754,6 +769,9 @@
             .btn-submit {
                 max-width: 100%;
             }
+            .media-wrap {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -796,109 +814,246 @@
     </nav>
 
     <!-- SCENE 0 -->
-    <section class="scene" id="scene0"><div class="card"><h1>THE MYTH OF STABILITY</h1><div class="divider"></div><div class="grid-stats"><div class="stat-box"><span class="val counter" data-target="244000">244000</span><span class="lbl">Tech Jobs Erased 2025</span></div><div class="stat-box"><span class="val counter" data-target="69">69%</span><span class="lbl">US Layoffs</span></div><div class="stat-box"><span class="val counter" data-target="50000">50000</span><span class="lbl">Direct AI Replacements</span></div><div class="stat-box"><span class="val counter" data-target="142000">142000</span><span class="lbl">2026 Layoffs</span></div></div><div class="fact">These corporations are not loyal to you — they are loyal to their stock price. Every quarter, human beings become liabilities on a balance sheet, expendable the moment an algorithm outperforms them.</div><div class="fact">The narrative of "job stability" is a carefully crafted illusion. Your desk, your title, your salary — all vanish the instant the spreadsheet demands it.</div><div class="media-placeholder"><span>📷 ./public/myth-stability.webp</span></div></div></section>
+    <section class="scene" id="scene0">
+        <div class="card">
+            <h1>THE MYTH OF STABILITY</h1>
+            <div class="divider"></div>
+            <div class="grid-stats">
+                <div class="stat-box"><span class="val counter" data-target="244000">244000</span><span class="lbl">Tech Jobs Erased 2025</span></div>
+                <div class="stat-box"><span class="val counter" data-target="69">69%</span><span class="lbl">US Layoffs</span></div>
+                <div class="stat-box"><span class="val counter" data-target="50000">50000</span><span class="lbl">Direct AI Replacements</span></div>
+                <div class="stat-box"><span class="val counter" data-target="142000">142000</span><span class="lbl">2026 Layoffs</span></div>
+            </div>
+            <div class="fact">These corporations are not loyal to you — they are loyal to their stock price. Every quarter, human beings become liabilities on a balance sheet, expendable the moment an algorithm outperforms them.</div>
+            <div class="fact">The narrative of "job stability" is a carefully crafted illusion. Your desk, your title, your salary — all vanish the instant the spreadsheet demands it.</div>
+            <div class="media-wrap">
+                <img src="./public/myth-stability.webp" alt="Myth of Stability" loading="lazy" />
+                <span class="media-caption">📷 ./public/myth-stability.webp</span>
+            </div>
+        </div>
+    </section>
 
     <!-- SCENE 1 -->
-    <section class="scene" id="scene1"><div class="card gold"><h2>🌊 AI's Invisible Victim: Fresh Water</h2><div class="divider"></div><div class="fact">A <strong>single AI query</strong> can consume between <span class="stat-large">3.5 ml – 500 ml</span> of fresh drinking water — depending on model complexity and cloud region.</div><div class="fact">By <strong>2027</strong>, AI data centres will demand <span class="stat-large">4.2 – 6.6 billion m³</span> of water annually — roughly <strong>half of the United Kingdom's total yearly water usage.</strong></div><div class="fact">Global data centres already consume approximately <span class="stat-large">560 billion litres</span> of fresh water each year — and this number is rising exponentially.</div><div class="media-placeholder"><span>🎬 ./public/water-crisis.webm</span></div></div></section>
+    <section class="scene" id="scene1">
+        <div class="card gold">
+            <h2>🌊 AI's Invisible Victim: Fresh Water</h2>
+            <div class="divider"></div>
+            <div class="fact">A <strong>single AI query</strong> can consume between <span class="stat-large">3.5 ml – 500 ml</span> of fresh drinking water — depending on model complexity and cloud region.</div>
+            <div class="fact">By <strong>2027</strong>, AI data centres will demand <span class="stat-large">4.2 – 6.6 billion m³</span> of water annually — roughly <strong>half of the United Kingdom's total yearly water usage.</strong></div>
+            <div class="fact">Global data centres already consume approximately <span class="stat-large">560 billion litres</span> of fresh water each year — and this number is rising exponentially.</div>
+            <div class="media-wrap">
+                <video src="./public/water-crisis.webm" autoplay muted loop playsinline loading="lazy"></video>
+                <span class="media-caption">🎬 ./public/water-crisis.webm</span>
+            </div>
+        </div>
+    </section>
 
     <!-- SCENE 2 -->
-    <section class="scene" id="scene2"><div class="card"><h2>🔒 YOUR DATA, THEIR PROFIT</h2><div class="divider"></div><div class="fact">Google controls an estimated <span class="stat-large">97% – 98%</span> of India's search market — a near-total monopoly over what billions can discover, learn, and believe.</div><div class="fact">In 2025 alone, the Indian government issued <span class="stat-large">over 24,000</span> content blocking orders. Your digital reality is curated, censored, and commodified.</div><div class="fact">Every click, every query — <strong>it is all productised and sold</strong> to the highest bidder. You are not the customer; you are the inventory.</div><div class="media-placeholder"><span>📷 ./public/data-profit.webp</span></div></div></section>
+    <section class="scene" id="scene2">
+        <div class="card">
+            <h2>🔒 YOUR DATA, THEIR PROFIT</h2>
+            <div class="divider"></div>
+            <div class="fact">Google controls an estimated <span class="stat-large">97% – 98%</span> of India's search market — a near-total monopoly over what billions can discover, learn, and believe.</div>
+            <div class="fact">In 2025 alone, the Indian government issued <span class="stat-large">over 24,000</span> content blocking orders. Your digital reality is curated, censored, and commodified.</div>
+            <div class="fact">Every click, every query — <strong>it is all productised and sold</strong> to the highest bidder. You are not the customer; you are the inventory.</div>
+            <div class="media-wrap">
+                <img src="./public/data-profit.webp" alt="Your Data Their Profit" loading="lazy" />
+                <span class="media-caption">📷 ./public/data-profit.webp</span>
+            </div>
+        </div>
+    </section>
 
     <!-- SCENE 3 -->
-    <section class="scene" id="scene3"><div class="card gold"><h2>🏛️ DIGITAL COLONISATION</h2><div class="divider"></div><div class="fact">Google dominates <strong>97–98% of search</strong> in India. WhatsApp, Facebook, and Instagram control communication — <strong>zero Indian-owned alternatives</strong> at scale.</div><div class="fact">The East India Company once traded goods. <strong>Silicon Valley now trades your attention, your data, and your national sovereignty.</strong></div><div class="stat-large" style="font-size:1.3rem;">A handful of foreign corporations now control India's digital infrastructure. Until now.</div><div class="media-placeholder"><span>📷 ./public/digital-colonisation.webp</span></div></div></section>
+    <section class="scene" id="scene3">
+        <div class="card gold">
+            <h2>🏛️ DIGITAL COLONISATION</h2>
+            <div class="divider"></div>
+            <div class="fact">Google dominates <strong>97–98% of search</strong> in India. WhatsApp, Facebook, and Instagram control communication — <strong>zero Indian-owned alternatives</strong> at scale.</div>
+            <div class="fact">The East India Company once traded goods. <strong>Silicon Valley now trades your attention, your data, and your national sovereignty.</strong></div>
+            <div class="stat-large" style="font-size:1.3rem;">A handful of foreign corporations now control India's digital infrastructure. Until now.</div>
+            <div class="media-wrap">
+                <img src="./public/digital-colonisation.webp" alt="Digital Colonisation" loading="lazy" />
+                <span class="media-caption">📷 ./public/digital-colonisation.webp</span>
+            </div>
+        </div>
+    </section>
 
     <!-- SCENE 4 -->
-    <section class="scene" id="scene4"><div class="card"><h2>📢 THE MUZZLE ON FREE EXPRESSION</h2><div class="divider"></div><div class="fact">The satirical account <strong>"Cockroach Janta Party"</strong> was blocked and labelled a <em>"national threat"</em>. Satire is now treated as sedition.</div><div class="fact"><span class="stat-large">over 24,300</span> blocking orders issued in a single year. Compliance window shrunk from <strong>36 hours → 3 hours</strong>.</div><div class="fact">A <strong>foreign billionaire</strong>, sitting in Silicon Valley, now decides what constitutes a threat to the Republic of India — and can silence it with a single click.</div></div></section>
+    <section class="scene" id="scene4">
+        <div class="card">
+            <h2>📢 THE MUZZLE ON FREE EXPRESSION</h2>
+            <div class="divider"></div>
+            <div class="fact">The satirical account <strong>"Cockroach Janta Party"</strong> was blocked and labelled a <em>"national threat"</em>. Satire is now treated as sedition.</div>
+            <div class="fact"><span class="stat-large">over 24,300</span> blocking orders issued in a single year. Compliance window shrunk from <strong>36 hours → 3 hours</strong>.</div>
+            <div class="fact">A <strong>foreign billionaire</strong>, sitting in Silicon Valley, now decides what constitutes a threat to the Republic of India — and can silence it with a single click.</div>
+        </div>
+    </section>
 
     <!-- SCENE 5 -->
-    <section class="scene" id="scene5"><div class="card gold"><h2>💥 YOUTH EXPLOITATION CRISIS</h2><div class="divider"></div><div class="grid-stats"><div class="stat-box"><span class="val counter" data-target="18">0</span><span class="lbl">Youth Unemployment Rate</span></div><div class="stat-box"><span class="val counter" data-target="7.2">0</span><span class="lbl">IT Unemployment</span></div><div class="stat-box"><span class="val">ZERO</span><span class="lbl">Legal Definition of "Intern"</span></div></div><div class="fact">Indian labour law does <strong>NOT</strong> define the word "intern." This legal vacuum is deliberately exploited to extract <strong>unlimited free labour</strong> from millions of young Indians.</div><div class="media-placeholder"><span>📷 ./public/youth-exploitation.webp</span></div></div></section>
+    <section class="scene" id="scene5">
+        <div class="card gold">
+            <h2>💥 YOUTH EXPLOITATION CRISIS</h2>
+            <div class="divider"></div>
+            <div class="grid-stats">
+                <div class="stat-box"><span class="val counter" data-target="18">0</span><span class="lbl">Youth Unemployment Rate</span></div>
+                <div class="stat-box"><span class="val counter" data-target="7.2">0</span><span class="lbl">IT Unemployment</span></div>
+                <div class="stat-box"><span class="val">ZERO</span><span class="lbl">Legal Definition of "Intern"</span></div>
+            </div>
+            <div class="fact">Indian labour law does <strong>NOT</strong> define the word "intern." This legal vacuum is deliberately exploited to extract <strong>unlimited free labour</strong> from millions of young Indians.</div>
+            <div class="media-wrap">
+                <img src="./public/youth-exploitation.webp" alt="Youth Exploitation" loading="lazy" />
+                <span class="media-caption">📷 ./public/youth-exploitation.webp</span>
+            </div>
+        </div>
+    </section>
 
     <!-- SCENE 6 -->
-    <section class="scene" id="scene6"><div class="card"><h2>🕳️ THE UNPAID INTERNSHIP TRAP</h2><div class="divider"></div><div class="fact">A Zepto delivery boy chose gig work over a corporate internship — because <strong>"Internship equals exploitation in our country."</strong></div><div class="fact">Unpaid internships are <strong>normalised across Indian industry</strong> — even for IIM/IIT graduates. "Experience" is used to justify months of free labour.</div><div class="stat-large">"Internships = exploitation in our country."<br><span style="font-size:0.85rem;color:var(--gold);">— A Zepto delivery worker</span></div><div class="media-placeholder"><span>🎬 ./public/internship-trap.webm</span></div></div></section>
+    <section class="scene" id="scene6">
+        <div class="card">
+            <h2>🕳️ THE UNPAID INTERNSHIP TRAP</h2>
+            <div class="divider"></div>
+            <div class="fact">A Zepto delivery boy chose gig work over a corporate internship — because <strong>"Internship equals exploitation in our country."</strong></div>
+            <div class="fact">Unpaid internships are <strong>normalised across Indian industry</strong> — even for IIM/IIT graduates. "Experience" is used to justify months of free labour.</div>
+            <div class="stat-large">"Internships = exploitation in our country."<br><span style="font-size:0.85rem;color:var(--gold);">— A Zepto delivery worker</span></div>
+            <div class="media-wrap">
+                <video src="./public/internship-trap.webm" autoplay muted loop playsinline loading="lazy"></video>
+                <span class="media-caption">🎬 ./public/internship-trap.webm</span>
+            </div>
+        </div>
+    </section>
 
     <!-- SCENE 7 -->
-    <section class="scene" id="scene7"><div class="card gold"><h2>🌍 AI's HIDDEN CARBON FOOTPRINT</h2><div class="divider"></div><div class="fact">AI operations generated approximately <span class="stat-large">80 million tonnes</span> of CO₂ in 2025 — rising fast.</div><div class="fact"><span class="stat-large">60%</span> of new data centre energy demand is met by <strong>fossil fuels</strong>, not renewables.</div><div class="fact">Global data centre electricity consumption is projected to <strong>double</strong> to <span class="stat-large">1,000 TWh</span> by 2030.</div></div></section>
+    <section class="scene" id="scene7">
+        <div class="card gold">
+            <h2>🌍 AI's HIDDEN CARBON FOOTPRINT</h2>
+            <div class="divider"></div>
+            <div class="fact">AI operations generated approximately <span class="stat-large">80 million tonnes</span> of CO₂ in 2025 — rising fast.</div>
+            <div class="fact"><span class="stat-large">60%</span> of new data centre energy demand is met by <strong>fossil fuels</strong>, not renewables.</div>
+            <div class="fact">Global data centre electricity consumption is projected to <strong>double</strong> to <span class="stat-large">1,000 TWh</span> by 2030.</div>
+        </div>
+    </section>
 
     <!-- SCENE 8 -->
-    <section class="scene" id="scene8"><div class="card" style="border-color:rgba(0,229,255,0.55); box-shadow:0 20px 50px rgba(0,0,0,0.5),0 0 45px rgba(0,229,255,0.18);"><h1 style="font-size:clamp(1.6rem,3.5vw,2.4rem);">✦ THE KALKI ANSWER</h1><div class="divider" style="width:100px;"></div><div class="fact">⚡ <strong>Browser-native, private AI</strong> — runs entirely on your device. No data centre. No tracking. No surveillance.</div><div class="fact">🔓 <strong>100% open-source.</strong> Zero water consumption for inference. Your device becomes the server.</div><div class="fact">🌱 <span class="stat-large">99% lower</span> carbon footprint per query compared to any cloud-based AI model.</div><div class="stat-large" style="font-size:1.4rem; margin-top:1.2rem;">kalkicore.vercel.app<br><span style="font-size:0.8rem;color:var(--gold);">Your Device. Your Intelligence. Your Sovereignty.</span></div></div></section>
+    <section class="scene" id="scene8">
+        <div class="card" style="border-color:rgba(0,229,255,0.55); box-shadow:0 20px 50px rgba(0,0,0,0.5),0 0 45px rgba(0,229,255,0.18);">
+            <h1 style="font-size:clamp(1.6rem,3.5vw,2.4rem);">✦ THE KALKI ANSWER</h1>
+            <div class="divider" style="width:100px;"></div>
+            <div class="fact">⚡ <strong>Browser-native, private AI</strong> — runs entirely on your device. No data centre. No tracking. No surveillance.</div>
+            <div class="fact">🔓 <strong>100% open-source.</strong> Zero water consumption for inference. Your device becomes the server.</div>
+            <div class="fact">🌱 <span class="stat-large">99% lower</span> carbon footprint per query compared to any cloud-based AI model.</div>
+            <div class="stat-large" style="font-size:1.4rem; margin-top:1.2rem;">kalkicore.vercel.app<br><span style="font-size:0.8rem;color:var(--gold);">Your Device. Your Intelligence. Your Sovereignty.</span></div>
+        </div>
+    </section>
 
     <!-- SCENE 9: Compensation -->
-    <section class="scene" id="scene9"><div class="card gold"><h2>💰 HOW WE COMPENSATE YOU</h2><div class="divider"></div>
-        <div class="grid-stats"><div class="stat-box"><span class="lbl">Month 1</span><span class="val">Training</span><span class="lbl">Unpaid · Foundation</span></div><div class="stat-box"><span class="lbl">Month 2–3</span><span class="val">Up to ₹7,000</span><span class="lbl">Performance-Based</span></div><div class="stat-box"><span class="lbl">Senior Analyst</span><span class="val">₹2k–3k</span><span class="lbl">Fixed + Bonus</span></div><div class="stat-box"><span class="lbl">PPO Offer</span><span class="val">₹15k–18k</span><span class="lbl">+ Equity Stake</span></div></div>
-        <div class="fact" style="border-left-color: var(--gold);"><strong>🧠 Why we start unpaid — and how we’re different:</strong> Unlike exploitative internships that treat you as free data-entry labour, our Month 1 is a genuine two‑way assessment. You learn our stack, we evaluate your commitment. No busywork. No fake promises. From Month 2, you earn <strong>based on measurable outcomes</strong> — leads generated, insights delivered. You are a partner, not a victim.</div>
-        <div class="fact">📜 Every node receives a <strong>government‑recognised MSME certificate</strong> and a <strong>free Google Data Analytics Professional Certificate</strong> (worth ₹14k+ on Coursera).</div>
-    </div></section>
-
-    <!-- SCENE 10: Data Analyst Career Tracks (12 roles) -->
-    <section class="scene" id="scene10"><div class="card"><h2>📊 DATA ANALYST CAREER TRACKS (12 PATHS)</h2><div class="divider"></div>
-        <div class="grid-stats" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.8rem;">
-            <div class="stat-box"><span class="val" style="font-size:1rem;">🧑‍💼 HR Analyst</span><span class="lbl">People analytics, attrition prediction, workforce planning.</span></div>
-            <div class="stat-box"><span class="val" style="font-size:1rem;">📈 BD Analyst</span><span class="lbl">Market sizing, lead scoring, revenue forecasting.</span></div>
-            <div class="stat-box"><span class="val" style="font-size:1rem;">💰 Financial Analyst</span><span class="lbl">Financial modelling, risk assessment, investment insights.</span></div>
-            <div class="stat-box"><span class="val" style="font-size:1rem;">📱 Social Media Analyst</span><span class="lbl">Campaign performance, sentiment analysis, content ROI.</span></div>
-            <div class="stat-box"><span class="val" style="font-size:1rem;">📊 Marketing Analyst</span><span class="lbl">Customer segmentation, funnel analysis, A/B testing.</span></div>
-            <div class="stat-box"><span class="val" style="font-size:1rem;">⚙️ Operations Analyst</span><span class="lbl">Process optimization, supply chain efficiency, KPI tracking.</span></div>
-            <div class="stat-box"><span class="val" style="font-size:1rem;">🚚 Supply Chain Analyst</span><span class="lbl">Logistics data, inventory forecasting, vendor analytics.</span></div>
-            <div class="stat-box"><span class="val" style="font-size:1rem;">🧪 Product Analyst</span><span class="lbl">User behaviour, feature adoption, A/B experiments.</span></div>
-            <div class="stat-box"><span class="val" style="font-size:1rem;">🛡️ Risk Analyst</span><span class="lbl">Fraud detection, credit risk modelling, compliance analytics.</span></div>
-            <div class="stat-box"><span class="val" style="font-size:1rem;">🧹 Data Quality Analyst</span><span class="lbl">Data cleansing, validation rules, master data management.</span></div>
-            <div class="stat-box"><span class="val" style="font-size:1rem;">🏥 Healthcare Analyst</span><span class="lbl">Patient outcome analysis, operational efficiency, claims data.</span></div>
-            <div class="stat-box"><span class="val" style="font-size:1rem;">📈 BI Analyst</span><span class="lbl">Dashboarding, KPI architecture, executive reporting.</span></div>
+    <section class="scene" id="scene9">
+        <div class="card gold">
+            <h2>💰 HOW WE COMPENSATE YOU</h2>
+            <div class="divider"></div>
+            <div class="grid-stats">
+                <div class="stat-box"><span class="lbl">Month 1</span><span class="val">Training</span><span class="lbl">Unpaid · Foundation</span></div>
+                <div class="stat-box"><span class="lbl">Month 2–3</span><span class="val">Up to ₹7,000</span><span class="lbl">Performance-Based</span></div>
+                <div class="stat-box"><span class="lbl">Senior Analyst</span><span class="val">₹2k–3k</span><span class="lbl">Fixed + Bonus</span></div>
+                <div class="stat-box"><span class="lbl">PPO Offer</span><span class="val">₹15k–18k</span><span class="lbl">+ Equity Stake</span></div>
+            </div>
+            <div class="fact" style="border-left-color: var(--gold);"><strong>🧠 Why we start unpaid — and how we’re different:</strong> Unlike exploitative internships that treat you as free data-entry labour, our Month 1 is a genuine two‑way assessment. You learn our stack, we evaluate your commitment. No busywork. No fake promises. From Month 2, you earn <strong>based on measurable outcomes</strong> — leads generated, insights delivered. You are a partner, not a victim.</div>
+            <div class="fact">📜 Every node receives a <strong>government‑recognised MSME certificate</strong> and a <strong>free Google Data Analytics Professional Certificate</strong> (worth ₹14k+ on Coursera).</div>
         </div>
-        <div class="fact">All tracks share a common foundation: <strong>Supabase, Redis, conversion funnels, cohort analysis, data storytelling</strong>. You’ll build a portfolio that speaks louder than any résumé.</div>
-    </div></section>
+    </section>
+
+    <!-- SCENE 10: Data Analyst Career Tracks -->
+    <section class="scene" id="scene10">
+        <div class="card">
+            <h2>📊 DATA ANALYST CAREER TRACKS (12 PATHS)</h2>
+            <div class="divider"></div>
+            <div class="grid-stats" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.8rem;">
+                <div class="stat-box"><span class="val" style="font-size:1rem;">🧑‍💼 HR Analyst</span><span class="lbl">People analytics, attrition prediction, workforce planning.</span></div>
+                <div class="stat-box"><span class="val" style="font-size:1rem;">📈 BD Analyst</span><span class="lbl">Market sizing, lead scoring, revenue forecasting.</span></div>
+                <div class="stat-box"><span class="val" style="font-size:1rem;">💰 Financial Analyst</span><span class="lbl">Financial modelling, risk assessment, investment insights.</span></div>
+                <div class="stat-box"><span class="val" style="font-size:1rem;">📱 Social Media Analyst</span><span class="lbl">Campaign performance, sentiment analysis, content ROI.</span></div>
+                <div class="stat-box"><span class="val" style="font-size:1rem;">📊 Marketing Analyst</span><span class="lbl">Customer segmentation, funnel analysis, A/B testing.</span></div>
+                <div class="stat-box"><span class="val" style="font-size:1rem;">⚙️ Operations Analyst</span><span class="lbl">Process optimization, supply chain efficiency, KPI tracking.</span></div>
+                <div class="stat-box"><span class="val" style="font-size:1rem;">🚚 Supply Chain Analyst</span><span class="lbl">Logistics data, inventory forecasting, vendor analytics.</span></div>
+                <div class="stat-box"><span class="val" style="font-size:1rem;">🧪 Product Analyst</span><span class="lbl">User behaviour, feature adoption, A/B experiments.</span></div>
+                <div class="stat-box"><span class="val" style="font-size:1rem;">🛡️ Risk Analyst</span><span class="lbl">Fraud detection, credit risk modelling, compliance analytics.</span></div>
+                <div class="stat-box"><span class="val" style="font-size:1rem;">🧹 Data Quality Analyst</span><span class="lbl">Data cleansing, validation rules, master data management.</span></div>
+                <div class="stat-box"><span class="val" style="font-size:1rem;">🏥 Healthcare Analyst</span><span class="lbl">Patient outcome analysis, operational efficiency, claims data.</span></div>
+                <div class="stat-box"><span class="val" style="font-size:1rem;">📈 BI Analyst</span><span class="lbl">Dashboarding, KPI architecture, executive reporting.</span></div>
+            </div>
+            <div class="fact">All tracks share a common foundation: <strong>Supabase, Redis, conversion funnels, cohort analysis, data storytelling</strong>. You’ll build a portfolio that speaks louder than any résumé.</div>
+        </div>
+    </section>
 
     <!-- SCENE 11: Join as Node -->
-    <section class="scene" id="scene11"><div class="card"><h2>🤝 JOIN A TEAM, NOT A HIERARCHY</h2><div class="divider"></div><div class="fact">🚫 <strong>No daily/weekly call targets.</strong> Outcome‑based ownership. Your results define your worth.</div><div class="fact">🔗 <strong>Direct access</strong> to the CTO and founding team. Flat structure. Radical transparency.</div><div class="fact">📊 Learn <strong>real, market‑valuable skills:</strong> Supabase, Redis, funnel analytics, cohort modelling — hands‑on data work.</div><div class="stat-large">You are not an employee.<br>You are a <span style="color:var(--gold);">NODE</span> in a decentralised intelligence network.</div></div></section>
+    <section class="scene" id="scene11">
+        <div class="card">
+            <h2>🤝 JOIN A TEAM, NOT A HIERARCHY</h2>
+            <div class="divider"></div>
+            <div class="fact">🚫 <strong>No daily/weekly call targets.</strong> Outcome‑based ownership. Your results define your worth.</div>
+            <div class="fact">🔗 <strong>Direct access</strong> to the CTO and founding team. Flat structure. Radical transparency.</div>
+            <div class="fact">📊 Learn <strong>real, market‑valuable skills:</strong> Supabase, Redis, funnel analytics, cohort modelling — hands‑on data work.</div>
+            <div class="stat-large">You are not an employee.<br>You are a <span style="color:var(--gold);">NODE</span> in a decentralised intelligence network.</div>
+        </div>
+    </section>
 
     <!-- SCENE 12: REPOST -->
-    <section class="scene" id="scene12"><div class="card" style="text-align:center; border-color:rgba(0,229,255,0.5);"><h1 style="font-size:clamp(1.6rem,4vw,2.5rem);">REPOST OR REGRET</h1><div class="divider" style="margin:1rem auto;width:80px;"></div><div class="fact" style="border-left:none;padding-left:0;font-size:1.1rem;text-align:center;">If you haven't reposted our LinkedIn post, <strong>do it NOW.</strong></div><div class="fact" style="border-left:none;padding-left:0;text-align:center;">We only consider candidates who prove commitment through action.</div><a href="#" id="repostCta" class="btn-cta">⚡ REPOST & ACTIVATE</a></div></section>
+    <section class="scene" id="scene12">
+        <div class="card" style="text-align:center; border-color:rgba(0,229,255,0.5);">
+            <h1 style="font-size:clamp(1.6rem,4vw,2.5rem);">REPOST OR REGRET</h1>
+            <div class="divider" style="margin:1rem auto;width:80px;"></div>
+            <div class="fact" style="border-left:none;padding-left:0;font-size:1.1rem;text-align:center;">If you haven't reposted our LinkedIn post, <strong>do it NOW.</strong></div>
+            <div class="fact" style="border-left:none;padding-left:0;text-align:center;">We only consider candidates who prove commitment through action.</div>
+            <a href="#" id="repostCta" class="btn-cta">⚡ REPOST & ACTIVATE</a>
+        </div>
+    </section>
 
     <!-- SCENE 13: APPLICATION FORM -->
-    <section class="scene" id="scene13"><div class="card" style="border-color:rgba(0,229,255,0.6);">
-        <h2 style="border-left-color:var(--cyan);">📋 APPLY AS A NODE</h2>
-        <div class="divider"></div>
-        <form id="applyForm">
-            <div class="form-grid">
-                <div class="form-group"><label>Full Name *</label><input type="text" name="full_name" required placeholder="Your full name" /></div>
-                <div class="form-group"><label>Email *</label><input type="email" name="email" required placeholder="you@example.com" /></div>
-                <div class="form-group"><label>LinkedIn Profile URL *</label><input type="url" name="linkedin" required placeholder="https://linkedin.com/in/yourprofile" /></div>
-                <div class="form-group"><label>Preferred Analyst Track</label>
-                    <select name="track">
+    <section class="scene" id="scene13">
+        <div class="card" style="border-color:rgba(0,229,255,0.6);">
+            <h2 style="border-left-color:var(--cyan);">📋 APPLY AS A NODE</h2>
+            <div class="divider"></div>
+            <form id="applyForm">
+                <div class="form-grid">
+                    <div class="form-group"><label>Full Name *</label><input type="text" name="full_name" required placeholder="Your full name" /></div>
+                    <div class="form-group"><label>Email *</label><input type="email" name="email" required placeholder="you@example.com" /></div>
+                    <div class="form-group"><label>LinkedIn Profile URL *</label><input type="url" name="linkedin" required placeholder="https://linkedin.com/in/yourprofile" /></div>
+                    <div class="form-group"><label>Preferred Analyst Track</label>
+                        <select name="track">
+                            <option value="">-- Select --</option>
+                            <option>HR Analyst</option>
+                            <option>BD Analyst</option>
+                            <option>Financial Analyst</option>
+                            <option>Social Media Analyst</option>
+                            <option>Marketing Analyst</option>
+                            <option>Operations Analyst</option>
+                            <option>Supply Chain Analyst</option>
+                            <option>Product Analyst</option>
+                            <option>Risk Analyst</option>
+                            <option>Data Quality Analyst</option>
+                            <option>Healthcare Analyst</option>
+                            <option>BI Analyst</option>
+                            <option>Open to any</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Hours per week you can commit</label><input type="text" name="hours" placeholder="e.g., 15-20" /></div>
+                </div>
+                <div class="form-group"><label>Why do you want to join Kalki Intelligence? *</label><textarea name="why_join" required placeholder="Tell us what excites you about our mission..."></textarea></div>
+                <div class="form-group"><label>Describe any past freelancing or remote work experience</label><textarea name="freelance_exp" placeholder="List any freelance projects, platforms, or clients..."></textarea></div>
+                <div class="form-group"><label>How would you approach reaching out to potential clients/customers for our product? *</label><textarea name="outreach_strategy" required placeholder="Be practical: channels, messaging, tools you'd use..."></textarea></div>
+                <div class="form-group"><label>Data tools you are familiar with (Excel, SQL, Python, Supabase, Tableau, etc.)</label><input type="text" name="tools" placeholder="e.g., Excel, SQL, Python, Tableau" /></div>
+                <div class="form-group"><label>Have you reposted our LinkedIn post? *</label>
+                    <select name="reposted" required>
                         <option value="">-- Select --</option>
-                        <option>HR Analyst</option>
-                        <option>BD Analyst</option>
-                        <option>Financial Analyst</option>
-                        <option>Social Media Analyst</option>
-                        <option>Marketing Analyst</option>
-                        <option>Operations Analyst</option>
-                        <option>Supply Chain Analyst</option>
-                        <option>Product Analyst</option>
-                        <option>Risk Analyst</option>
-                        <option>Data Quality Analyst</option>
-                        <option>Healthcare Analyst</option>
-                        <option>BI Analyst</option>
-                        <option>Open to any</option>
+                        <option>Yes</option>
+                        <option>No (I will do it now)</option>
                     </select>
                 </div>
-                <div class="form-group"><label>Hours per week you can commit</label><input type="text" name="hours" placeholder="e.g., 15-20" /></div>
-            </div>
-            <div class="form-group"><label>Why do you want to join Kalki Intelligence? *</label><textarea name="why_join" required placeholder="Tell us what excites you about our mission..."></textarea></div>
-            <div class="form-group"><label>Describe any past freelancing or remote work experience</label><textarea name="freelance_exp" placeholder="List any freelance projects, platforms, or clients..."></textarea></div>
-            <div class="form-group"><label>How would you approach reaching out to potential clients/customers for our product? *</label><textarea name="outreach_strategy" required placeholder="Be practical: channels, messaging, tools you'd use..."></textarea></div>
-            <div class="form-group"><label>Data tools you are familiar with (Excel, SQL, Python, Supabase, Tableau, etc.)</label><input type="text" name="tools" placeholder="e.g., Excel, SQL, Python, Tableau" /></div>
-            <div class="form-group"><label>Have you reposted our LinkedIn post? *</label>
-                <select name="reposted" required>
-                    <option value="">-- Select --</option>
-                    <option>Yes</option>
-                    <option>No (I will do it now)</option>
-                </select>
-            </div>
-            <div class="form-group"><label>Any additional message or portfolio link</label><textarea name="message" placeholder="Anything else you'd like us to know..."></textarea></div>
-            <button type="submit" class="btn-submit">🚀 SUBMIT APPLICATION</button>
-            <div id="formMessage" class="form-message"></div>
-        </form>
-    </div></section>
+                <div class="form-group"><label>Any additional message or portfolio link</label><textarea name="message" placeholder="Anything else you'd like us to know..."></textarea></div>
+                <button type="submit" class="btn-submit">🚀 SUBMIT APPLICATION</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </section>
 
     <footer>
         <span class="cyan">KALKI TECHNOLOGIES</span> — kalkicore.vercel.app  — +91 6261031710<br>
@@ -1044,7 +1199,6 @@
             menuOpen = false;
             navPanel.classList.remove('open');
             menuBtn.classList.remove('open');
-            // Reset any inline GSAP transforms so the CSS transition takes over
             gsap.set(navPanel, { clearProps: 'opacity,x,scale' });
         }
 
@@ -1069,10 +1223,8 @@
                 const target = document.getElementById(targetId);
                 if (!target) return;
 
-                // Close menu first
                 closeMenu();
 
-                // Brief delay to let menu close, then scroll
                 setTimeout(() => {
                     gsap.to(window, {
                         duration: 1.1,
@@ -1081,7 +1233,6 @@
                     });
                 }, 180);
 
-                // Flash effect
                 const flash = document.createElement('div');
                 flash.style.cssText =
                     `position:fixed;inset:0;z-index:99999;pointer-events:none;background:radial-gradient(circle,rgba(0,229,255,0.15),transparent 65%);opacity:1;transition:opacity 0.5s;`;
@@ -1158,7 +1309,7 @@
                         0.25, ease: 'back.out(0.45)', scrollTrigger: { trigger: scene, start: 'top 77%',
                             toggleActions: 'play none none reverse' } });
             });
-            scene.querySelectorAll('.media-placeholder').forEach((m, j) => {
+            scene.querySelectorAll('.media-wrap').forEach((m, j) => {
                 gsap.fromTo(m, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.55, delay: j * 0.12 +
                         0.3, ease: 'power2.out', scrollTrigger: { trigger: scene, start: 'top 75%',
                             toggleActions: 'play none none reverse' } });
@@ -1213,10 +1364,7 @@
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            // Add the access key
             data.access_key = WEB3FORMS_ACCESS_KEY;
-
-            // Add a subject for better email sorting
             data.subject = 'KALKI NODE Application – ' + data.full_name;
 
             formMsg.innerHTML = '<span style="color:#00E5FF;">⏳ Submitting your application…</span>';
@@ -1238,7 +1386,6 @@
                     formMsg.innerHTML =
                         '<span style="color:#C6A43F;">✅ Application received! We’ll review and get back to you within 48 hours.</span>';
                     form.reset();
-                    // Flash the card
                     const card = form.closest('.card');
                     if (card) {
                         card.classList.add('form-flash');
